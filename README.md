@@ -74,12 +74,12 @@ git clone [https://github.com/Pedro-g2/SIGEST-backend.git](https://github.com/Pe
 O arquivo .env contém as variáveis de ambiente do seu projeto, incluindo as credenciais do banco de dados.
 
 Abra o arquivo .env e localize as informações de conexão do banco de dados. Preencha-as de acordo com o seu banco de dados, por exemplo:
-DB_CONNECTION=mariadb
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=sigest
-DB_USERNAME=root
-DB_PASSWORD=
+* DB_CONNECTION=mariadb
+* DB_HOST=127.0.0.1
+* DB_PORT=3306
+* DB_DATABASE=sigest
+* DB_USERNAME=root
+* DB_PASSWORD=
 
 ### Instalar Dependências
 Navegue até a pasta raiz do seu projeto Laravel no terminal e execute o Composer para baixar todas as dependências restantes do projeto:
