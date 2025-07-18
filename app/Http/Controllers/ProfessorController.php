@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\ProfessorRequest;
+use App\Http\Requests\StoreProfessorRequest;
+use App\Http\Requests\UpdateProfessorRequest;
+use App\Http\Resources\ProfessorResource;
+use App\Models\Professor;
+use Illuminate\Http\Request;
+
+class ProfessorController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return ProfessorResource::collection(Professor::all());
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     * This method is not typically used in API controllers
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreProfessorRequest $request)
+    {
+        $professor = Professor::create($request->validated());
+        return response()->json([
+            'mensagem' => 'Professor cadastrado com sucesso.',
+            'professor' => new ProfessorResource($professor)
+        ], 201);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Professor $professor)
+    {
+        return new ProfessorResource($professor);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     * This method is not typically used in API controllers
+     */
+    public function edit(Professor $professor)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateProfessorRequest $request, Professor $professor)
+    {
+        $professor->update($request->validated());
+        return response()->json([
+            'message' => 'Professor atualizado com sucesso!',
+            'professor' => $professor 
+        ], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Professor $professor)
+    {
+        $professor->delete();
+        return response()->json([
+            'message' => 'Professor excluído com sucesso!'
+        ], 200);
+    }
+}
