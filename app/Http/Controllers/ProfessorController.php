@@ -16,7 +16,7 @@ class ProfessorController extends Controller
      */
     public function index()
     {
-        return ProfessorResource::collection(Professor::all());
+        return ProfessorResource::collection(Professor::paginate(10));
     }
 
     /**
