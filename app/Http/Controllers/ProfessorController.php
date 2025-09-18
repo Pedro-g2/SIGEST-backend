@@ -19,6 +19,47 @@ class ProfessorController extends Controller
         return ProfessorResource::collection(Professor::paginate(10));
     }
 
+    // Busca pelo nome
+    public function searchName(Request $request)
+    {
+        $searchTerm = $request->input('nome');
+
+        $professors = Professor::query()->when($searchTerm, function ($query, $searchTerm){
+            return $query->where('nome', 'LIKE', '%' . $searchTerm . '%');
+        })->get();
+
+        if(!$professors)
+        {
+            return response()->json([
+                'mensagem' => 'Professor não encontrado.'
+            ], 404);
+        }
+
+        return response()->json([
+            'mensagem' => 'Professor encontrado.',
+            'professors' => ProfessorResource::collection($professors)
+        ], 201);
+    }
+
+    //Busca por cpf
+    public function searchCpf(Request $request)
+    {
+        $professorCpf = $request->input('cpf');
+
+        $professor = Professor::where('cpf', $professorCpf)->first();
+
+        if ($professor) {
+            return response()->json([
+                'mensagem' => 'Professor encontrado.',
+                'professor' => new ProfessorResource($professor)
+            ], 200);
+        } else {
+            return response()->json([
+                'mensagem' => 'Nenhum professor encontrado com este CPF.'
+            ], 404);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      * This method is not typically used in API controllers
